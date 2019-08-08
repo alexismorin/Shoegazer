@@ -8,6 +8,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
+/Assets/AmplifyShaderEditor/*
 /[Mm]emoryCaptures/
 
 # Never ignore Asset meta data

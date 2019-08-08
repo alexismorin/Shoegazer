@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guitar : MonoBehaviour
-{
+public class Guitar : MonoBehaviour {
     [SerializeField]
     bool leftHanded = true;
     [SerializeField]
@@ -30,55 +29,41 @@ public class Guitar : MonoBehaviour
     bool isHoldingLowString;
     bool isHoldingHighString;
 
-
-    void Start()
-    {
-        HandOrientation();
+    void Start () {
+        HandOrientation ();
     }
 
-
-    void HandOrientation()
-    {
-        if (leftHanded)
-        {
+    void HandOrientation () {
+        if (leftHanded) {
             pickHand = leftHand;
             noteHand = rightHand;
-        }
-        else
-        {
+        } else {
             pickHand = rightHand;
             noteHand = leftHand;
         }
 
-        guitarRestingPosition = pickHand.GetComponent<Hand>().guitarRestPosition;
+        guitarRestingPosition = pickHand.GetComponent<Hand> ().guitarRestPosition;
         oldPickTransform = pickHand.transform.position;
     }
 
-    void PlayNote()
-    {
+    void PlayNote () {
 
-
-        if (isHoldingLowString)
-        {
-            lowNoteAudioSource.Stop();
-            lowNoteAudioSource.Play();
+        if (isHoldingLowString) {
+            lowNoteAudioSource.Stop ();
+            lowNoteAudioSource.Play ();
         }
-        if (isHoldingHighString)
-        {
-            highNoteAudioSource.Stop();
-            highNoteAudioSource.Play();
+        if (isHoldingHighString) {
+            highNoteAudioSource.Stop ();
+            highNoteAudioSource.Play ();
         }
     }
 
-    void FixedUpdate()
-    {
-        transform.LookAt(noteHand.transform.position);
-
+    void FixedUpdate () {
+        transform.LookAt (noteHand.transform.position);
 
     }
 
-    void Update()
-    {
+    void Update () {
         lastPickVelocity = pickVelocity;
         newPickTransform = pickHand.transform.position;
         Vector3 pickMedia = (newPickTransform - oldPickTransform);
@@ -86,55 +71,45 @@ public class Guitar : MonoBehaviour
         oldPickTransform = newPickTransform;
         newPickTransform = pickHand.transform.position;
 
-
-        if (leftHanded == true)
-        {
+        if (leftHanded == true) {
 
             //  high note
-            if (Input.GetAxis("XRI_Right_Trigger") > 0.5f)
-            {
+            if (Input.GetAxis ("XRI_Right_Trigger") > 0.5f) {
                 isHoldingHighString = true;
-                highNoteAudioSource.pitch = -2.39f * Vector3.Distance(noteHand.transform.position, noteRoot.transform.position) + 3f;
+                highNoteAudioSource.pitch = -4f * Mathf.Clamp (Vector3.Distance (noteHand.transform.position, noteRoot.transform.position), 0f, 0.5f) + 3f;
             }
 
-            if (Input.GetButtonUp("XRI_Right_TriggerButton"))
-            {
+            if (Input.GetButtonUp ("XRI_Right_TriggerButton")) {
                 isHoldingHighString = false;
                 //    StopHighString();
             }
 
             //  low note
-            if (Input.GetAxis("XRI_Right_Grip") > 0.5f)
-            {
+            if (Input.GetAxis ("XRI_Right_Grip") > 0.5f) {
                 isHoldingLowString = true;
-                lowNoteAudioSource.pitch = -2.39f * Vector3.Distance(noteHand.transform.position, noteRoot.transform.position) + 2f;
+                lowNoteAudioSource.pitch = -4f * Mathf.Clamp (Vector3.Distance (noteHand.transform.position, noteRoot.transform.position), 0f, 0.5f) + 3f;
             }
 
-            if (Input.GetButtonUp("XRI_Right_GripButton"))
-            {
+            if (Input.GetButtonUp ("XRI_Right_GripButton")) {
                 isHoldingLowString = false;
                 //    StopLowString();
             }
 
             // Actual Note Playing
-            if (Input.GetButton("XRI_Left_GripButton"))
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, guitarRestingPosition.transform.position, ref velocity, 0.2f * Time.deltaTime);
-                if (Input.GetButtonDown("XRI_Left_SecondaryButton"))
-                {
-                    PlayNote();
+            if (Input.GetButton ("XRI_Left_GripButton")) {
+                transform.position = Vector3.SmoothDamp (transform.position, guitarRestingPosition.transform.position, ref velocity, 0.2f * Time.deltaTime);
+                if (Input.GetButtonDown ("XRI_Left_SecondaryButton")) {
+                    PlayNote ();
                 }
             }
         }
 
     }
 
-    void StopLowString()
-    {
-        lowNoteAudioSource.Stop();
+    void StopLowString () {
+        lowNoteAudioSource.Stop ();
     }
-    void StopHighString()
-    {
-        highNoteAudioSource.Stop();
+    void StopHighString () {
+        highNoteAudioSource.Stop ();
     }
 }
