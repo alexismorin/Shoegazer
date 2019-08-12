@@ -15,6 +15,12 @@ public class Guitar : MonoBehaviour {
     AudioSource lowNoteAudioSource;
     [SerializeField]
     AudioSource highNoteAudioSource;
+    [SerializeField]
+    Transform leftHandedPosLow;
+    [SerializeField]
+    Transform leftHandedPosHigh;
+    [SerializeField]
+    GameObject leftHandedSlide;
 
     GameObject pickHand;
     GameObject noteHand;
@@ -60,7 +66,12 @@ public class Guitar : MonoBehaviour {
 
     void FixedUpdate () {
         transform.LookAt (noteHand.transform.position);
+        transform.position = Vector3.SmoothDamp (transform.position, guitarRestingPosition.transform.position, ref velocity, 0.2f * Time.deltaTime);
 
+        leftHandedSlide.transform.position = Vector3.Lerp (leftHandedPosHigh.position, leftHandedPosLow.position, Vector3.Distance (noteHand.transform.position, noteRoot.transform.position) * 2f);
+        leftHandedSlide.transform.eulerAngles = Vector3.Lerp (leftHandedPosHigh.eulerAngles, leftHandedPosLow.eulerAngles, Vector3.Distance (noteHand.transform.position, noteRoot.transform.position) * 2f);
+
+        //  Mathf.Clamp (Vector3.Distance (noteHand.transform.position, noteRoot.transform.position), 0f, 0.5f)
     }
 
     void Update () {
@@ -97,7 +108,6 @@ public class Guitar : MonoBehaviour {
 
             // Actual Note Playing
             if (Input.GetButton ("XRI_Left_GripButton")) {
-                transform.position = Vector3.SmoothDamp (transform.position, guitarRestingPosition.transform.position, ref velocity, 0.2f * Time.deltaTime);
                 if (Input.GetButtonDown ("XRI_Left_SecondaryButton")) {
                     PlayNote ();
                 }
