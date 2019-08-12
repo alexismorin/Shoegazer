@@ -1,7 +1,7 @@
 # Shoegazer
 ## A VR Guitar Jam Session Project 
 
-Jump inside a nasty dive bar and jam out to the beat of your favourite songs on a lead guitar. Fully Open-Source Unity 2019.2 VR project optimized for both Desktop VR and Oculus Quest. This is largely an experiment to see how far along I could get with a weekend's amount of work - I took an hour friday at my job to prototype the basic guitar mechanics but then the other 10 hours I spent doing look dev and prototyping at home.
+Jump jump on the stage of a backdoor venue and jam out to the beat of your favourite songs on a lead guitar. Fully Open-Source Unity 2019.2 VR project optimized for both Desktop VR and Oculus Quest. This is largely an experiment to see how far along I could get with a weekend's amount of work - I took an hour friday at my job to prototype the basic guitar mechanics but then the other 10 hours I spent doing look dev and prototyping at home.
 
 ![header](images/header.png)
 
